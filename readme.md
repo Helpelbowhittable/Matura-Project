@@ -5,8 +5,11 @@ This project implements a Convolutional Neural Network (CNN) and Multilayer Perc
 ## Project Structure
 
 ProjectFolder/
-├─  main.py
+
+├─  main.py 
+
 ├─  Models/ (downloaded trained model files go here)
+
 └─  EMNIST Kaggle/ (downloaded dataset files go here)
 
 ## Requirements
