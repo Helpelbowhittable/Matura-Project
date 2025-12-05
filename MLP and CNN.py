@@ -2,9 +2,7 @@ import numpy as np
 from numpy.lib.stride_tricks import sliding_window_view
 import time
 import pickle
-import os
 import scipy
-import matplotlib.pyplot as plt
 import pandas as pd
 from tensorflow.keras.datasets import mnist
 import tkinter as tk
@@ -686,4 +684,5 @@ if mode == 2:
 
     while True:
         manual_test_model(model, dataset)
+
 
