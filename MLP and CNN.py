@@ -1,5 +1,3 @@
-print("Project: Scratch Final")
-
 import numpy as np
 from numpy.lib.stride_tricks import sliding_window_view
 import time
@@ -688,3 +686,4 @@ if mode == 2:
 
     while True:
         manual_test_model(model, dataset)
+
