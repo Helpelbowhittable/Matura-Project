@@ -34,8 +34,9 @@ Download the following folders and place them in the same directory as main.py.
 
 Download Location:
 
-- Models: https://mega.nz/folder/4AY3zDCT#zf0Evj8_cxDp4Sbflz2Jpw
-- EMNIST Kaggle: https://mega.nz/folder/4IJVQADJ#UCBKyuBx6VFibdT04TFXrQ
+- https://mega.nz/folder/QA4AXLhD#JaZJ-gY0hEqTbDR10exnAA
+
+Ensure that the folders are unzipped after download.
 
 ## How to Run
 
