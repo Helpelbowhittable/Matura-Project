@@ -1,8 +1,12 @@
+print("Project: Scratch Final")
+
 import numpy as np
 from numpy.lib.stride_tricks import sliding_window_view
 import time
 import pickle
+import os
 import scipy
+import matplotlib.pyplot as plt
 import pandas as pd
 from tensorflow.keras.datasets import mnist
 import tkinter as tk
@@ -269,11 +273,11 @@ class Adam():
         self.beta2 = beta2
         self.epsilon = 1e-8
 
-    def optimize(self, epoch, param, gradient, momentum, variance):
+    def optimize(self, iteration, param, gradient, momentum, variance):
         momentum = self.beta1 * momentum + (1 - self.beta1) * gradient
         variance = self.beta2 * variance + (1 - self.beta2) * (gradient ** 2)
-        momentum_adjusted = momentum / (1 - self.beta1 ** epoch)
-        variance_adjusted = variance / (1 - self.beta2 ** epoch)
+        momentum_adjusted = momentum / (1 - self.beta1 ** iteration)
+        variance_adjusted = variance / (1 - self.beta2 ** iteration)
         new_param = param - self.lr * momentum_adjusted / (np.sqrt(variance_adjusted) + self.epsilon)
 
         return new_param, momentum, variance
@@ -313,11 +317,11 @@ class PerceptronModel(nn):
         grad = self.relu1.backward(grad)
         grad = self.linear1.backward(grad)
 
-    def optimizer_step(self, epoch):
+    def optimizer_step(self, iteration):
         if isinstance(self.optim, SGD):
             self.simple_sgd(self.optim.lr)
         if isinstance(self.optim, Adam):
-            self.optim_adam(epoch)
+            self.optim_adam(iteration)
 
     def simple_sgd(self, learning_rate):
         # ("SGD Perceptron")
@@ -329,21 +333,21 @@ class PerceptronModel(nn):
         self.linear3.weights -= learning_rate * self.linear3.dweights
         self.linear3.biases -= learning_rate * self.linear3.dbiases
 
-    def optim_adam(self, epoch):
+    def optim_adam(self, iteration):
         self.backward()
 
         self.linear1.weights, self.linear1.mweights, self.linear1.vweights = self.optim.optimize(
-            epoch, self.linear1.weights, self.linear1.dweights, self.linear1.mweights, self.linear1.vweights)
+            iteration, self.linear1.weights, self.linear1.dweights, self.linear1.mweights, self.linear1.vweights)
         self.linear1.biases, self.linear1.mbiases, self.linear1.vbiases = self.optim.optimize(
-            epoch, self.linear1.biases, self.linear1.dbiases, self.linear1.mbiases, self.linear1.vbiases)
+            iteration, self.linear1.biases, self.linear1.dbiases, self.linear1.mbiases, self.linear1.vbiases)
         self.linear2.weights, self.linear2.mweights, self.linear2.vweights = self.optim.optimize(
-            epoch, self.linear2.weights, self.linear2.dweights, self.linear2.mweights, self.linear2.vweights)
+            iteration, self.linear2.weights, self.linear2.dweights, self.linear2.mweights, self.linear2.vweights)
         self.linear2.biases, self.linear2.mbiases, self.linear2.vbiases = self.optim.optimize(
-            epoch, self.linear2.biases, self.linear2.dbiases, self.linear2.mbiases, self.linear2.vbiases)
+            iteration, self.linear2.biases, self.linear2.dbiases, self.linear2.mbiases, self.linear2.vbiases)
         self.linear3.weights, self.linear3.mweights, self.linear3.vweights = self.optim.optimize(
-            epoch, self.linear3.weights, self.linear3.dweights, self.linear3.mweights, self.linear3.vweights)
+            iteration, self.linear3.weights, self.linear3.dweights, self.linear3.mweights, self.linear3.vweights)
         self.linear3.biases, self.linear3.mbiases, self.linear3.vbiases = self.optim.optimize(
-            epoch, self.linear3.biases, self.linear3.dbiases, self.linear3.mbiases, self.linear3.vbiases)
+            iteration, self.linear3.biases, self.linear3.dbiases, self.linear3.mbiases, self.linear3.vbiases)
 
 
 class ConvModel(nn):  # 16 32 1568 128
@@ -452,7 +456,7 @@ def evaluate_model(model, dataset, batch_sizes, epochs):
             loss = model.forward(x, y)[1]
             if i % 100 == 0:
                 print(f"Training | Epoch: {epoch}, Batch: {i}, Loss: {loss}")
-            model.optimizer_step(epoch+1)
+            model.optimizer_step(epoch*(x_train.shape[0] // batch_sizes) + i +1)
         times.append(time.time())
 
     n_correct = 0
@@ -684,5 +688,3 @@ if mode == 2:
 
     while True:
         manual_test_model(model, dataset)
-
-
