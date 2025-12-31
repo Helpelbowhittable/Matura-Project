@@ -2,6 +2,11 @@
 
 This project implements a Convolutional Neural Network (CNN) and Multilayer Perceptron (MLP) for handwritten digit recognition using the MNIST and EMNIST dataset. 
 
+## Abstract
+
+This Matura project investigates neural networks on a low-level. The goal is to program models from the ground up that function and perform equivalently to those implemented with deep learning libraries. We develop two architectures—a multilayer perceptron (MLP) and a convolutional neural network (CNN)—and apply them to the MNIST and EMNIST Balanced handwriting datasets. All components, including forward propagation, backward propagation, gradient computation, parameter updates, and convolutional operations, are theoretically defined, analysed and implemented in Python without the use of deep learning libraries. 
+On MNIST, the MLP achieves an accuracy of 89.4% with SGD, and 98.3% with Adam. On EMNIST Balanced, the CNN achieves 86.8% with Adam. These results–both within 1–2% of state-of-the-art–demonstrate that fully manual implementations can reach competitive performance relative to standard baselines. The thesis offers an accessible, rigorous and concise reference for readers seeking to understand neural networks and convolutional networks at a fundamental level.
+
 ## Project Structure
 
 ProjectFolder/
